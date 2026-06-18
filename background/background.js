@@ -6,7 +6,7 @@ const LOOKUP_ENDPOINT =
 
 chrome.runtime.onMessage.addListener(
     (message, sender, sendResponse) => {
-        if (message.type !== "LOOKUP_LATIN") {
+        if (message.type !== "ANALYZE_WORD") {
             return;
         }
 

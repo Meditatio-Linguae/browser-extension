@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Anglysis",
-    "description": "Discover Latin roots and meanings of selected words.",
+    "description": "Analyze words. Unpack meanings. Uncover origins.",
     "version": "1.0.0",
     "permissions": [
         "storage"

@@ -1,4 +1,4 @@
-// console.log("LATIN LENS CONTENT LOADED");
+// console.log("ANGLYSIS CONTENT LOADED");
 
 let currentButton = null;
 let currentPopup = null;
@@ -11,7 +11,7 @@ document.addEventListener(
 function onTextSelected(event) {
     if (
         event.target &&
-        event.target.closest(".latin-lens-button")
+        event.target.closest(".anglysis-button")
     ) {
         return;
     }
@@ -50,9 +50,23 @@ function createLookupButton(
         document.createElement("button");
 
     button.className =
-        "latin-lens-button";
+        "anglysis-button";
 
-    button.textContent = "L";
+    button.innerHTML = `
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+        >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <circle cx="12" cy="8" r="1"></circle>
+        </svg>
+    `;
 
     button.style.left =
         `${window.scrollX + rect.right}px`;
@@ -72,7 +86,7 @@ function createLookupButton(
 
                 const response =
                     await chrome.runtime.sendMessage({
-                        type: "LOOKUP_LATIN",
+                        type: "ANALYZE_WORD",
                         word
                     });
 
@@ -103,7 +117,7 @@ function showResultPopup(
         document.createElement("div");
 
     popup.className =
-        "latin-lens-popup";
+        "anglysis-popup";
 
     const morphemes =
         data.morphemes || [];
@@ -112,11 +126,11 @@ function showResultPopup(
         morphemes
             .map(
                 item => `
-                <div class="latin-morpheme">
-                    <div class="latin-morpheme-root">
+                <div class="anglysis-morpheme">
+                    <div class="anglysis-morpheme-root">
                         ${item.text}
                     </div>
-                    <div class="latin-morpheme-meaning">
+                    <div class="anglysis-morpheme-meaning">
                         ${item.meaning}
                     </div>
                 </div>
@@ -125,34 +139,34 @@ function showResultPopup(
             .join("");
 
     popup.innerHTML = `
-        <div class="latin-header">
+        <div class="anglysis-header">
             ${selectedWord}
         </div>
 
-        <div class="latin-section">
-            <div class="latin-label">
+        <div class="anglysis-section">
+            <div class="anglysis-label">
                 Meaning
             </div>
 
-            <div class="latin-value">
+            <div class="anglysis-value">
                 ${data.meaning || "-"}
             </div>
         </div>
 
-        <div class="latin-section">
-            <div class="latin-label">
+        <div class="anglysis-section">
+            <div class="anglysis-label">
                 Morpheme Breakdown
             </div>
-            <div class="latin-morphemes">
+            <div class="anglysis-morphemes">
                 ${morphemesHtml}
             </div>
         </div>
 
-        <div class="latin-section">
-            <div class="latin-label">
+        <div class="anglysis-section">
+            <div class="anglysis-label">
                 Origin
             </div>
-            <div class="latin-value">
+            <div class="anglysis-value">
                 ${data.originLanguage || "-"}
             </div>
         </div>
@@ -182,10 +196,10 @@ function showErrorPopup(
         document.createElement("div");
 
     popup.className =
-        "latin-lens-popup";
+        "anglysis-popup";
 
     popup.innerHTML = `
-    <div class="latin-error">
+    <div class="anglysis-error">
       ${message}
     </div>
   `;
