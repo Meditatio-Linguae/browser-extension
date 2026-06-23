@@ -1,0 +1,124 @@
+.anglysis-button {
+
+    position: absolute;
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+    border: none;
+
+    background: #111;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 2147483647;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.anglysis-popup {
+
+    position: absolute;
+
+    width: 260px;
+
+    background: white;
+
+    border: 1px solid #e5e5e5;
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    z-index: 2147483647;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 12px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.anglysis-toolbar {
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.morpheme-tabs {
+
+    display: flex;
+    gap: 4px;
+    flex: 1;
+    overflow-x: auto;
+}
+
+.morpheme-tab {
+
+    border: none;
+    background: #f3f3f3;
+    padding: 2px 6px;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.morpheme-tab.active {
+    background: #111;
+    color: white;
+}
+
+.word-prev,
+.word-next {
+
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.word-prev:disabled,
+.word-next:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.anglysis-word {
+
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.anglysis-section {
+    margin-bottom: 6px;
+}
+
+.label {
+    font-size: 10px;
+    color: #777;
+    margin-bottom: 2px;
+}
+
+.value {
+    font-size: 12px;
+}
+
+.anglysis-popup,
+.anglysis-button {
+    user-select: none;
+    /* Không cho phép bôi đen text bên trong popup/button */
+}
+
+.morpheme-tab,
+.word-prev,
+.word-next {
+    pointer-events: auto !important;
+    /* Đảm bảo chuột luôn ăn vào các nút này */
+}
