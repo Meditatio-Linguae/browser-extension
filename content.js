@@ -4,6 +4,20 @@ let analysisResult = null;
 let currentWordIndex = 0;
 let currentMorphemeIndex = 0;
 
+const ORIGIN_OF_TONGUE = {
+    la: "Latin",
+    el: "Greek",
+    en: "English",
+    fr: "French"
+};
+
+function getOriginName(origin) {
+    if (!origin) {
+        return "-";
+    }
+    return ORIGIN_OF_TONGUE[origin] || origin;
+}
+
 /* =========================
    TEXT SELECTION
 ========================= */
@@ -127,7 +141,10 @@ function updatePopupContent() {
     popup.innerHTML = `
         <div class="anglysis-toolbar">
             <button class="word-prev" ${prevDisabled ? "disabled" : ""}>◀</button>
-            <div class="morpheme-tabs">${tabs}</div>
+            <div class="morpheme-tabs-wrapper">
+                <div class="morpheme-tabs">${tabs}</div>
+                <div class="morpheme-divider"></div>
+            </div>
             <button class="word-next" ${nextDisabled ? "disabled" : ""}>▶</button>
         </div>
         <div class="anglysis-word">${word.fullWord}</div>
@@ -136,8 +153,13 @@ function updatePopupContent() {
             <div class="value">${morpheme?.meaning || "-"}</div>
         </div>
         <div class="anglysis-section">
-            <div class="label">Origin</div>
-            <div class="value">${morpheme?.origin || "-"}</div>
+            <div class="label">Origin of Tongue</div>
+            <div class="value">
+                ${morpheme?.root || "-"}
+                ${morpheme?.origin
+            ? `(from ${getOriginName(morpheme.origin)})`
+            : ""}
+            </div>
         </div>
     `;
 }
