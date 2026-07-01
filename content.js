@@ -125,42 +125,80 @@ function createPopupContainer(rect) {
    POPUP UPDATE (CHỈ ĐỔI RUỘT HTML)
 ========================= */
 function updatePopupContent() {
-    if (!popup || !analysisResult) return;
+    if (!popup || !analysisResult) {
+        return;
+    }
 
     const word = analysisResult.words[currentWordIndex];
-    const morpheme = word.morphemes[currentMorphemeIndex];
+    const hasMorphemes = word.morphemes.length > 0;
+    const morpheme = hasMorphemes ? word.morphemes[currentMorphemeIndex] : null;
     const prevDisabled = currentWordIndex === 0;
     const nextDisabled = currentWordIndex === analysisResult.words.length - 1;
-
-    const tabs = word.morphemes.map((m, i) => `
-        <button class="morpheme-tab ${i === currentMorphemeIndex ? "active" : ""}" data-index="${i}">
+    const tabs = hasMorphemes ? word.morphemes.map((m, i) => `
+        <button
+            class="morpheme-tab ${i === currentMorphemeIndex ? "active" : ""}"
+            data-index="${i}">
             ${m.text}
         </button>
-    `).join("");
+    `).join("") : "";
 
     popup.innerHTML = `
-        <div class="anglysis-toolbar">
-            <button class="word-prev" ${prevDisabled ? "disabled" : ""}>◀</button>
-            <div class="morpheme-tabs-wrapper">
-                <div class="morpheme-tabs">${tabs}</div>
-                <div class="morpheme-divider"></div>
+    <div class="anglysis-toolbar">
+
+        <button class="word-prev"
+            ${prevDisabled ? "disabled" : ""}>
+            ◀
+        </button>
+
+        <div class="morpheme-tabs-wrapper">
+            ${hasMorphemes
+            ? `
+                    <div class="morpheme-tabs">
+                        ${tabs}
+                    </div>
+                    `
+            : `
+                    <div class="anglysis-word-header">
+                        ${word.fullWord}
+                    </div>
+                    `
+        }
+            <div class="morpheme-divider"></div>
+        </div>
+
+        <button class="word-next"
+            ${nextDisabled ? "disabled" : ""}>
+            ▶
+        </button>
+    </div>
+        ${hasMorphemes
+            ? `
+            <div class="anglysis-word">
+                ${word.fullWord}
             </div>
-            <button class="word-next" ${nextDisabled ? "disabled" : ""}>▶</button>
-        </div>
-        <div class="anglysis-word">${word.fullWord}</div>
-        <div class="anglysis-section">
-            <div class="label">Meaning</div>
-            <div class="value">${morpheme?.meaning || "-"}</div>
-        </div>
-        <div class="anglysis-section">
-            <div class="label">Origin of Tongue</div>
-            <div class="value">
-                ${morpheme?.root || "-"}
-                ${morpheme?.origin
-            ? `(from ${getOriginName(morpheme.origin)})`
-            : ""}
+
+            <div class="anglysis-section">
+                <div class="label">Meaning</div>
+                <div class="value">
+                    ${morpheme.meaning}
+                </div>
             </div>
-        </div>
+            <div class="anglysis-section">
+                <div class="label">
+                    Origin of Tongue
+                </div>
+                <div class="value">
+                    ${morpheme.root || "-"}
+                    ${morpheme.origin
+                ? `(from ${getOriginName(morpheme.origin)})`
+                : ""}
+                </div>
+            </div>
+            ` : `
+            <div class="anglysis-empty">
+                Sorry! We don't have that word in our database, but we're always adding new ones.
+            </div>
+            `}
     `;
 }
 
