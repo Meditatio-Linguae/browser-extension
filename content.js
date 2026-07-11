@@ -3,6 +3,8 @@ let popup = null;
 let analysisResult = null;
 let currentWordIndex = 0;
 let currentMorphemeIndex = 0;
+let highlightedWords = [];
+let selectedRange = null;
 
 const ORIGIN_OF_TONGUE = {
     la: "Latin",
@@ -16,6 +18,51 @@ function getOriginName(origin) {
         return "-";
     }
     return ORIGIN_OF_TONGUE[origin] || origin;
+}
+
+function highlightSelectedText() {
+    if (!selectedRange) {
+        return;
+    }
+
+    removeWordHighlights();
+    const text = selectedRange.toString();
+    const words = text.match(/\S+/g) || [];
+    const container = document.createElement("span");
+    container.className = "anglysis-selection";
+    words.forEach((word, index) => {
+        const span = document.createElement("span");
+        span.className = "anglysis-word-highlight";
+        span.dataset.index = index;
+        span.textContent = word;
+        container.appendChild(span);
+        if (index < words.length - 1) {
+            container.appendChild(document.createTextNode(" "));
+        }
+        highlightedWords.push(span);
+    });
+    selectedRange.deleteContents();
+    selectedRange.insertNode(container);
+}
+
+function removeWordHighlights() {
+    highlightedWords.forEach(span => {
+        const parent = span.parentNode;
+        if (!parent) {
+            return;
+        }
+        parent.replaceWith(parent.textContent);
+    });
+    highlightedWords = [];
+}
+
+function updateCurrentHighlightedWord() {
+    highlightedWords.forEach((span, index) => {
+        span.classList.toggle(
+            "current-word",
+            index === currentWordIndex
+        );
+    });
 }
 
 /* =========================
@@ -37,6 +84,7 @@ document.addEventListener("mouseup", (event) => {
     removePopup();
 
     const range = window.getSelection().getRangeAt(0);
+    selectedRange = range.cloneRange();
     const rect = range.getBoundingClientRect();
     createButton(text, rect);
 });
@@ -69,6 +117,8 @@ function createButton(text, rect) {
         }
 
         analysisResult = res;
+        highlightSelectedText();
+        window.getSelection().removeAllRanges();
         currentWordIndex = 0;
         currentMorphemeIndex = 0;
 
@@ -173,10 +223,6 @@ function updatePopupContent() {
     </div>
         ${hasMorphemes
             ? `
-            <div class="anglysis-word">
-                ${word.fullWord}
-            </div>
-
             <div class="anglysis-section">
                 <div class="label">Meaning</div>
                 <div class="value">
@@ -200,13 +246,18 @@ function updatePopupContent() {
             </div>
             `}
     `;
+    updateCurrentHighlightedWord();
 }
 
 /* =========================
    CLEANUP & CLICK OUTSIDE
 ========================= */
 function removeButton() { button?.remove(); button = null; }
-function removePopup() { popup?.remove(); popup = null; }
+function removePopup() {
+    popup?.remove();
+    popup = null;
+    removeWordHighlights();
+}
 
 /* Click ngoài rìa thực sự mới đóng */
 document.addEventListener("mousedown", (e) => {
