@@ -1,20 +1,24 @@
-.anglysis-button {
+.etymon-button {
     position: absolute;
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: none;
-    background: #111;
-    color: white;
+    border: 1.25px solid #e5e5e5;
+    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 2147483647;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    background-image: url("logo.png");
+    background-size: cover;      /* or contain */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
 }
 
-.anglysis-popup {
+.etymon-popup {
     position: absolute;
     width: 260px;
     background: white;
@@ -27,7 +31,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-.anglysis-toolbar {
+.etymon-toolbar {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -84,33 +88,33 @@
     cursor: default;
 }
 
-.anglysis-word-header {
+.etymon-word-header {
     text-align: center;
     font-size: 14px;
     line-height: 24px;
     min-height: 24px;
 }
 
-.anglysis-word {
+.etymon-word {
     font-weight: bold;
     margin-bottom: 6px;
 }
 
-.anglysis-word-highlight {
-    background: #7fc9ff;
+.etymon-word-highlight {
+    background: #DBDBDA;
     border-radius: 2px;
     transition: background .15s;
 }
 
-.anglysis-word-highlight.current-word {
+.etymon-word-highlight.current-word {
     background: #fff176;
 }
 
-.anglysis-section {
+.etymon-section {
     margin-bottom: 6px;
 }
 
-.anglysis-empty {
+.etymon-empty {
     min-height: 120px;
     display: flex;
     justify-content: center;
@@ -133,8 +137,8 @@
     font-size: 12px;
 }
 
-.anglysis-popup,
-.anglysis-button {
+.etymon-popup,
+.etymon-button {
     user-select: none;
     /* Không cho phép bôi đen text bên trong popup/button */
 }
