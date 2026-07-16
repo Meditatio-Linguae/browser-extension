@@ -3,15 +3,19 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: none;
-    background: #111;
-    color: white;
+    border: 1.25px solid #e5e5e5;
+    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 2147483647;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    background-image: url("logo.png");
+    background-size: cover;      /* or contain */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
 }
 
 .etymon-popup {
@@ -97,7 +101,7 @@
 }
 
 .etymon-word-highlight {
-    background: #7fc9ff;
+    background: #DBDBDA;
     border-radius: 2px;
     transition: background .15s;
 }

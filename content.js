@@ -95,13 +95,13 @@ document.addEventListener("mouseup", (event) => {
 function createButton(text, rect) {
     button = document.createElement("button");
     button.className = "etymon-button";
-    button.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="16" x2="12" y2="12"/>
-            <circle cx="12" cy="8" r="1"/>
-        </svg>
-    `;
+    // button.innerHTML = `
+    //     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
+    //         <line x1="12" y1="16" x2="12" y2="12"/>
+    //         <circle cx="12" cy="8" r="1"/>
+    //     </svg>
+    // `;
+    button.style.backgroundImage = `url(${chrome.runtime.getURL("images/logo.png")})`;
     button.style.left = `${window.scrollX + rect.right}px`;
     button.style.top = `${window.scrollY + rect.bottom + 8}px`;
     document.body.appendChild(button);
