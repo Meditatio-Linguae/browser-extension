@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Anglysis",
+    "name": "Etymon",
     "description": "Analyze words. Unpack meanings. Uncover origins.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "permissions": [
         "activeTab"
     ],
@@ -26,7 +26,7 @@
         }
     ],
     "action": {
-        "default_title": "Anglysis"
+        "default_title": "Etymon"
     },
     "icons": {
         "16": "icons/icon16.png",

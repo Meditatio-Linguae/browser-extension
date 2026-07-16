@@ -29,10 +29,10 @@ function highlightSelectedText() {
     const text = selectedRange.toString();
     const words = text.match(/\S+/g) || [];
     const container = document.createElement("span");
-    container.className = "anglysis-selection";
+    container.className = "etymon-selection";
     words.forEach((word, index) => {
         const span = document.createElement("span");
-        span.className = "anglysis-word-highlight";
+        span.className = "etymon-word-highlight";
         span.dataset.index = index;
         span.textContent = word;
         container.appendChild(span);
@@ -70,7 +70,7 @@ function updateCurrentHighlightedWord() {
 ========================= */
 document.addEventListener("mouseup", (event) => {
     // Nếu nhả chuột trúng popup hoặc button thì tuyệt đối không làm gì
-    if (event.target.closest(".anglysis-popup") || event.target.closest(".anglysis-button")) {
+    if (event.target.closest(".etymon-popup") || event.target.closest(".etymon-button")) {
         return;
     }
 
@@ -94,7 +94,7 @@ document.addEventListener("mouseup", (event) => {
 ========================= */
 function createButton(text, rect) {
     button = document.createElement("button");
-    button.className = "anglysis-button";
+    button.className = "etymon-button";
     button.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="pointer-events: none;">
             <circle cx="12" cy="12" r="10"/>
@@ -136,7 +136,7 @@ function createButton(text, rect) {
 ========================= */
 function createPopupContainer(rect) {
     popup = document.createElement("div");
-    popup.className = "anglysis-popup";
+    popup.className = "etymon-popup";
     popup.style.left = `${window.scrollX + rect.left}px`;
     popup.style.top = `${window.scrollY + rect.bottom + 12}px`;
     document.body.appendChild(popup);
@@ -193,7 +193,7 @@ function updatePopupContent() {
     `).join("") : "";
 
     popup.innerHTML = `
-    <div class="anglysis-toolbar">
+    <div class="etymon-toolbar">
 
         <button class="word-prev"
             ${prevDisabled ? "disabled" : ""}>
@@ -208,7 +208,7 @@ function updatePopupContent() {
                     </div>
                     `
             : `
-                    <div class="anglysis-word-header">
+                    <div class="etymon-word-header">
                         ${word.fullWord}
                     </div>
                     `
@@ -223,13 +223,13 @@ function updatePopupContent() {
     </div>
         ${hasMorphemes
             ? `
-            <div class="anglysis-section">
+            <div class="etymon-section">
                 <div class="label">Meaning</div>
                 <div class="value">
                     ${morpheme.meaning}
                 </div>
             </div>
-            <div class="anglysis-section">
+            <div class="etymon-section">
                 <div class="label">
                     Origin of Tongue
                 </div>
@@ -241,7 +241,7 @@ function updatePopupContent() {
                 </div>
             </div>
             ` : `
-            <div class="anglysis-empty">
+            <div class="etymon-empty">
                 Sorry! We don't have that word in our database, but we're always adding new ones.
             </div>
             `}
@@ -261,7 +261,7 @@ function removePopup() {
 
 /* Click ngoài rìa thực sự mới đóng */
 document.addEventListener("mousedown", (e) => {
-    if (e.target.closest(".anglysis-popup") || e.target.closest(".anglysis-button")) {
+    if (e.target.closest(".etymon-popup") || e.target.closest(".etymon-button")) {
         return;
     }
     removePopup();
